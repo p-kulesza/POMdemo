@@ -4,3 +4,4 @@ class OverviewPage():
         self.button_cancel_id = ""
         self.button_finish_id = ""
         #whole payment info into text!!!
+        #product name == product in cart

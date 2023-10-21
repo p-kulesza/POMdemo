@@ -12,9 +12,11 @@ class CheckoutPageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         service_obj = Service("C:\\Users\\Admin\\Desktop\\geckodriver-v0.33.0-win64\\geckodriver.exe")
-        cls.driver = webdriver.Firefox(service=service_obj)
-        cls.driver.maximize_window()
+        options = webdriver.FirefoxOptions()
+        options.add_argument("--headless")
+        cls.driver = webdriver.Firefox(service=service_obj, options=options)
         cls.driver.implicitly_wait(5)
+        print("SetUp complete.")
 
     def login_step(self):
         driver = self.driver
@@ -54,6 +56,34 @@ class CheckoutPageTest(unittest.TestCase):
         homepage.click_addtocart()
         homepage.click_checkout()
         checkout.item_description()
+
+    def test_s(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        self.login_step()
+
+    def test_multiple_items_price(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        self.login_step()
+        homepage.click_addtocart()
+        homepage.click_addtocart()
+    #add items + check if price is correct (go to overview and check .summary_subtotal_label)
+
+    def test_multiple_items_delete(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        self.login_step()
+    #add items + check if price is correct + delete one + check if price is correct
+
+    def test_a(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        self.login_step()
 
 
     @classmethod

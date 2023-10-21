@@ -14,10 +14,17 @@ class HomePage():
         self.button_checkout_css = ".shopping_cart_link"
         self.button_sort_css = ".product_sort_container"
         self.button_addtocart_xpath = ".//button[@class='btn btn_primary btn_small btn_inventory ']"
-        self.inventory_item_css = ".inventory_item_name "
+        self.inventory_item_css = ".inventory_item_name"
 
     def click_menu(self):
         self.driver.find_element(By.XPATH, self.button_menu_xpath).click()
+    def menu_correctnes(self):
+        self.driver.find_element(By. ID, self.button_allitems_id)
+        self.driver.find_element(By.ID, self.button_about_id)
+        self.driver.find_element(By.ID, self.button_logout_id)
+        self.driver.find_element(By.ID, self.button_reset_id)
+        print("Menu present, all options correct.")
+
     def click_allitems(self):
         self.driver.find_element(By.ID, self.button_allitems_id).click()
     def click_reset(self):
@@ -32,9 +39,17 @@ class HomePage():
         self.driver.find_element(By.CSS_SELECTOR, self.button_checkout_css).click()
     def click_addtocart(self):
         self.driver.find_element(By.XPATH, self.button_addtocart_xpath).click()
-    def list_number_of_items(self):
+    def number_of_items(self):
         list = self.driver.find_elements(By.CSS_SELECTOR, self.inventory_item_css)
         print(len(list))
+
+    def list_products(self):
+        elements = self.driver.find_elements(By.CSS_SELECTOR, self.inventory_item_css)
+        for element in elements:
+            product_name_text = element.text
+            product_name_text.sort()
+            print(product_name_text)
+
 
     def select_product_sort_visible_text(self, visible_text):
         from selenium.webdriver.support.select import Select

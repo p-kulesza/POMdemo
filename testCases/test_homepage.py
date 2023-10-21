@@ -1,17 +1,22 @@
 import unittest
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+from Pages.checkoutPage import CheckoutPage
 from Pages.homePage import HomePage
 from Pages.loginPage import LoginPage
-
 
 class HomePageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         service_obj = Service("C:\\Users\\Admin\\Desktop\\geckodriver-v0.33.0-win64\\geckodriver.exe")
-        cls.driver = webdriver.Firefox(service=service_obj)
-        cls.driver.maximize_window()
+        options = webdriver.FirefoxOptions()
+        options.add_argument("--headless")
+        cls.driver = webdriver.Firefox(service=service_obj, options=options)
         cls.driver.implicitly_wait(5)
         print("SetUp complete.")
 
@@ -29,15 +34,19 @@ class HomePageTest(unittest.TestCase):
         homepage = HomePage(driver)
         self.login_step()
         homepage.click_menu()
+        #menu presence/menu correctness assertion
+        homepage.menu_correctnes()
 
     def test_reset(self):
         driver = self.driver
         homepage = HomePage(driver)
+        checkout = CheckoutPage(driver)
         self.login_step()
         homepage.click_addtocart()
         homepage.click_menu()
         homepage.click_reset()
         homepage.click_checkout()
+
         # add checkout assertion - lack of .cart_quantity?
 
     def test_allitems(self):
@@ -54,6 +63,9 @@ class HomePageTest(unittest.TestCase):
         self.login_step()
         homepage.click_menu()
         homepage.click_about()
+        actualtitle = self.driver.title #about page name assertion
+        expectedtitle = "Sauce Labs: Cross Browser Testing, Selenium Testing & Mobile Testing"
+        self.assertEqual(actualtitle, expectedtitle)
 
     def test_logout(self):
         driver = self.driver
@@ -69,21 +81,22 @@ class HomePageTest(unittest.TestCase):
         homepage = HomePage(driver)
         self.login_step()
         print("number of items on the page:")
-        homepage.list_number_of_items()
+        homepage.number_of_items()
+
 
     def test_sort_a_to_z(self):
         driver = self.driver
         homepage = HomePage(driver)
         self.login_step()
         homepage.select_product_sort_visible_text("Name (A to Z)")
-        #assertion here
+        #assertion here for loop + list.sort
 
     def test_sort_z_to_a(self):
         driver = self.driver
         homepage = HomePage(driver)
         self.login_step()
         homepage.select_product_sort_visible_text("Name (Z to A)")
-        # assertion here
+        # assertion here - for loop + list.sort
 
     def test_sort_low_to_high(self):
         driver = self.driver

@@ -9,9 +9,12 @@ from Pages.loginPage import LoginPage
 class end2end(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        service_obj = Service("C:\\Users\\user\\Desktop\\geckodriver\\geckodriver.exe")
-        cls.driver = webdriver.Firefox(service=service_obj)
-        cls.driver.maximize_window()
+        service_obj = Service("C:\\Users\\Admin\\Desktop\\geckodriver-v0.33.0-win64\\geckodriver.exe")
+        options = webdriver.FirefoxOptions()
+        options.add_argument("--headless")
+        cls.driver = webdriver.Firefox(service=service_obj, options=options)
+        cls.driver.implicitly_wait(5)
+        print("SetUp complete.")
 
     def test_login_valid_plus_reset(self):
         driver = self.driver
