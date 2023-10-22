@@ -44,12 +44,12 @@ class HomePage():
         print(len(list))
 
     def list_products(self):
-        elements = self.driver.find_elements(By.CSS_SELECTOR, self.inventory_item_css)
-        for element in elements:
-            product_name_text = element.text
-            product_name_text.sort()
-            print(product_name_text)
-
+        div_elements = self.driver.find_elements(By.CSS_SELECTOR, self.inventory_item_css)
+        actualList = []
+        for div_element in div_elements:
+            div_text = div_element.text
+            actualList.append(div_text)
+        return actualList
 
     def select_product_sort_visible_text(self, visible_text):
         from selenium.webdriver.support.select import Select
