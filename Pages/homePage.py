@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
+
 from selenium.webdriver.support.select import Select
+
 
 
 class HomePage():
@@ -19,6 +21,7 @@ class HomePage():
 
     def click_menu(self):
         self.driver.find_element(By.XPATH, self.button_menu_xpath).click()
+
     def menu_correctnes(self):
         self.driver.find_element(By. ID, self.button_allitems_id)
         self.driver.find_element(By.ID, self.button_about_id)

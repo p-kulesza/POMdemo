@@ -36,28 +36,34 @@ class InformationPageTest(unittest.TestCase):
         self.login_and_checkout_step()
         driver = self.driver
         information = InformationPage(driver)
-        ###
+        information.click_continue()
         information.error_message_presence()
 
     def test_no_firstname_information(self):
         self.login_and_checkout_step()
         driver = self.driver
         information = InformationPage(driver)
-        ###
+        information.enter_lastname("Kowalski")
+        information.enter_zip("11-111")
+        information.click_continue()
         information.error_message_presence()
 
     def test_no_lastname_information(self):
         self.login_and_checkout_step()
         driver = self.driver
         information = InformationPage(driver)
-        ###
+        information.enter_firstname("Piotr")
+        information.enter_zip("11-111")
+        information.click_continue()
         information.error_message_presence()
 
     def test_no_zipcode_information(self):
         self.login_and_checkout_step()
         driver = self.driver
         information = InformationPage(driver)
-        ###
+        information.enter_firstname("Piotr")
+        information.enter_lastname("Kowalski")
+        information.click_continue()
         information.error_message_presence()
 
     def test_valid_information_continue(self):
@@ -69,12 +75,17 @@ class InformationPageTest(unittest.TestCase):
         information.enter_zip("66-666")
         information.click_continue()
 
+
     def test_valid_information_cancel(self):
         self.login_and_checkout_step()
         driver = self.driver
+        information = InformationPage(driver)
         checkout = CheckoutPage(driver)
-        ###
-        checkout.item_description()
+        information.enter_firstname("Piotr")
+        information.enter_lastname("Kowalski")
+        information.enter_zip("11-111")
+        information.click_cancel()
+        checkout.item_description() #successfully came back to checkout page
 
     @classmethod
     def tearDownClass(cls):

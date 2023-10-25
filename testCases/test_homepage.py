@@ -1,9 +1,10 @@
+import numbers
 import unittest
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 from Pages.checkoutPage import CheckoutPage
@@ -34,7 +35,6 @@ class HomePageTest(unittest.TestCase):
         homepage = HomePage(driver)
         self.login_step()
         homepage.click_menu()
-        #menu presence/menu correctness assertion
         homepage.menu_correctnes()
 
     def test_reset(self):
@@ -47,6 +47,7 @@ class HomePageTest(unittest.TestCase):
         homepage.click_reset()
         homepage.click_checkout()
 
+        # HOW TO ASSERT LACK OF ELEMENT
         # add checkout assertion - lack of .cart_quantity?
 
     def test_allitems(self):
@@ -87,17 +88,20 @@ class HomePageTest(unittest.TestCase):
     def test_sort_a_to_z(self):
         driver = self.driver
         homepage = HomePage(driver)
+        self.login_step()
         homepage.select_product_sort_visible_text("Name (A to Z)")
         actualList = homepage.list_products()
         expectedList = sorted(homepage.list_products())
-        self.assertEqual(actualList, expectedList) #no hardcode!!!!
+        self.assertEqual(actualList, expectedList)
 
     def test_sort_z_to_a(self):
         driver = self.driver
         homepage = HomePage(driver)
+        self.login_step()
+        homepage.select_product_sort_visible_text("Name (Z to A)")
         homepage.select_product_sort_visible_text("Name (Z to A)")
         actualList = homepage.list_products()
-        expectedList  = sorted(homepage.list_products(), reverse = True)
+        expectedList = sorted(homepage.list_products(), reverse=True)
         self.assertEqual(actualList, expectedList)
 
     def test_sort_low_to_high(self):
@@ -105,14 +109,20 @@ class HomePageTest(unittest.TestCase):
         homepage = HomePage(driver)
         self.login_step()
         homepage.select_product_sort_visible_text("Price (low to high)")
-        # assertion here
+        actualList = homepage.list_price()  #['$7.99', '$9.99', '$15.99', '$15.99', '$29.99', '$49.99']
+        expectedList = ['$7.99', '$9.99', '$15.99', '$15.99', '$29.99', '$49.99']
+        self.assertEqual(actualList, expectedList) #extract only numbers
+
+
 
     def test_sort_high_to_low(self):
         driver = self.driver
         homepage = HomePage(driver)
         self.login_step()
         homepage.select_product_sort_visible_text("Price (high to low)")
-        # assertion here
+        actualList = homepage.list_price()
+        expectedList = ['$49.99', '$29.99', '$15.99', '$15.99', '$9.99', '$7.99']
+        self.assertEqual(actualList, expectedList)
 
     @classmethod
     def tearDownClass(cls):
