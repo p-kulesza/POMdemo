@@ -15,6 +15,7 @@ class HomePage():
         self.button_sort_css = ".product_sort_container"
         self.button_addtocart_xpath = ".//button[@class='btn btn_primary btn_small btn_inventory ']"
         self.inventory_item_css = ".inventory_item_name"
+        self.price_css = ".inventory_item_price"
 
     def click_menu(self):
         self.driver.find_element(By.XPATH, self.button_menu_xpath).click()
@@ -55,3 +56,11 @@ class HomePage():
         from selenium.webdriver.support.select import Select
         sel = Select(self.driver.find_element(By.CSS_SELECTOR, self.button_sort_css))
         sel.select_by_visible_text(visible_text)
+
+    def list_price(self):
+        div_elements = self.driver.find_elements(By.CSS_SELECTOR, self.price_css)
+        actualList = []
+        for div_element in div_elements:
+            div_text = div_element.text
+            actualList.append(div_text)
+        return actualList
