@@ -87,11 +87,10 @@ class HomePageTest(unittest.TestCase):
     def test_sort_a_to_z(self):
         driver = self.driver
         homepage = HomePage(driver)
-        self.login_step()
         homepage.select_product_sort_visible_text("Name (A to Z)")
-        homepage.list_products()
-        expectedList = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt', 'Sauce Labs Fleece Jacket', 'Sauce Labs Onesie', 'Test.allTheThings() T-Shirt (Red)']
-        self.assertEqual(homepage.list_products(), expectedList)
+        actualList = homepage.list_products()
+        expectedList = sorted(homepage.list_products())
+        self.assertEqual(actualList, expectedList) #no hardcode!!!!
 
     def test_sort_z_to_a(self):
         driver = self.driver
