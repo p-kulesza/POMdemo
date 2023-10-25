@@ -95,9 +95,10 @@ class HomePageTest(unittest.TestCase):
     def test_sort_z_to_a(self):
         driver = self.driver
         homepage = HomePage(driver)
-        self.login_step()
         homepage.select_product_sort_visible_text("Name (Z to A)")
-        # assertion here - for loop + list.sort
+        actualList = homepage.list_products()
+        expectedList  = sorted(homepage.list_products(), reverse = True)
+        self.assertEqual(actualList, expectedList)
 
     def test_sort_low_to_high(self):
         driver = self.driver
