@@ -1,14 +1,4 @@
-# import unittest
-#
-#
-# class OverviewPageTest(unittest.TestCase):
-#
-#     def test_summary_info_presence(self):
-#
-#     def test_price_total(self):
-#     #check if item total + tax is correct
 
-# add items + check if price is correct (go to overview and check .summary_subtotal_label)
 import unittest
 
 from selenium import webdriver
@@ -31,18 +21,23 @@ class OverviewPageTest(unittest.TestCase):
         cls.driver.implicitly_wait(5)
         print("SetUp complete.")
 
-    def login_and_checkout_and_info_emtpy_step(self):
+        def login_and_checkout_and_info_emtpy_step(self):
         driver = self.driver
         driver.get("https://www.saucedemo.com/")
         loginpage = LoginPage(driver)
         homepage = HomePage(driver)
         checkout = CheckoutPage(driver)
+        information = InformationPage(driver)
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
         homepage.click_addtocart()
         homepage.click_checkout()
         checkout.click_checkout()
+        information.enter_firstname("Piotr")
+        information.enter_lastname("Kowalski")
+        information.enter_zip("11-111")
+        information.click_continue()
 
     def login_checkout_and_info_w_items_step(self):
         driver = self.driver
@@ -67,9 +62,12 @@ class OverviewPageTest(unittest.TestCase):
         driver = self.driver
         self.login_checkout_and_info_w_items_step()
         overview = OverviewPage(driver)
-        overview.print_summary_info()
+        overview.print_summary_info() #maybe assertion of certain elements?
+        print(overview.get_item_name_text()) #add to other test
 
     #test every element of summary info?
+
+    #delete one item test, all items
 
     @classmethod
     def tearDownClass(cls):
