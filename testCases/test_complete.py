@@ -41,8 +41,6 @@ class CompletePageTest(unittest.TestCase):
         information.click_continue()
         overview.click_finish()
 
-
-
     def test_header_presence(self):
         driver = self.driver
         self.allsteps()
@@ -53,7 +51,9 @@ class CompletePageTest(unittest.TestCase):
         driver = self.driver
         self.allsteps()
         completepage = CompletePage(driver)
+        homepage = HomePage(driver)
         completepage.click_back_home()
+        homepage.app_logo_presence()
 
     @classmethod
     def tearDownClass(cls):

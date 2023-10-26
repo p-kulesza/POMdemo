@@ -35,9 +35,7 @@ class CheckoutPageTest(unittest.TestCase):
         self.login_step()
         homepage.click_checkout()
         checkout.click_checkout()
-        checkout.yourcart_presence_assertion()
-
-        #add assertion
+        self.assertEqual(checkout.list_number_of_items(), 0)
 
     def test_reset_checkout(self):
         driver = self.driver
@@ -48,47 +46,53 @@ class CheckoutPageTest(unittest.TestCase):
         homepage.click_checkout()
         checkout.click_menu_button()
         homepage.click_reset()
-        #reset does nothing on this stage for some reason :(
+        self.driver.refresh()
+        self.assertEqual(checkout.list_number_of_items(), 0)
 
-    def test_item_description_presence(self):
+    def test_item_description_presence_checkout(self):
         driver = self.driver
         checkout = CheckoutPage(driver)
         homepage = HomePage(driver)
         self.login_step()
         homepage.click_addtocart()
         homepage.click_checkout()
-        #checkout.item_description().is_displayed()
-        #NoSuchElementException
+        checkout.item_description()
 
-    def test_multiple_items(self):
+    def test_multiple_items_checkout(self):
         driver = self.driver
         checkout = CheckoutPage(driver)
         homepage = HomePage(driver)
         self.login_step()
         homepage.click_addtocart()
         homepage.click_addtocart()
+        homepage.click_checkout()
+        self.assertEqual(checkout.list_number_of_items(), 2)
 
-    #add items + check if price is correct (go to overview and check .summary_subtotal_label)
-
-    def test_multiple_items_delete_one(self):
+    def test_multiple_items_delete_one_checkout(self):
         driver = self.driver
         checkout = CheckoutPage(driver)
         homepage = HomePage(driver)
         self.login_step()
-    #add items + check if price is correct + delete one + check if one is left
+        homepage.click_addtocart()
+        homepage.click_addtocart()
+        homepage.click_checkout()
+        self.assertEqual(checkout.list_number_of_items(), 2)
+        checkout.delete_item()
+        self.assertEqual(checkout.list_number_of_items(), 1)
 
-    def test_mulitple_items_delete_all(self):
+    def test_mulitple_items_delete_all_checkout(self):
         driver = self.driver
         checkout = CheckoutPage(driver)
         homepage = HomePage(driver)
         self.login_step()
-
-    def test_a(self):
-        driver = self.driver
-        checkout = CheckoutPage(driver)
-        homepage = HomePage(driver)
-        self.login_step()
-
+        homepage.click_addtocart()
+        homepage.click_addtocart()
+        homepage.click_checkout()
+        self.assertEqual(checkout.list_number_of_items(), 2)
+        checkout.delete_item()
+        self.assertEqual(checkout.list_number_of_items(), 1)
+        checkout.delete_item()
+        self.assertEqual(checkout.list_number_of_items(), 0)
 
     @classmethod
     def tearDownClass(cls):

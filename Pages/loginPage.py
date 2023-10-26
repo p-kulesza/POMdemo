@@ -1,14 +1,15 @@
 from selenium.webdriver.common.by import By
+from Locators.loginPageLocators import LoginPageLocators
 
 
 class LoginPage():
     def __init__(self,driver):
         self.driver = driver
-        self.textbox_login_id = "user-name"
-        self.textbox_password_id = "password"
-        self.button_login_id = "login-button"
-        self.alert_error_xpath = "//h3[@data-test='error']"
-        self.logo_css = ".login_logo"
+        self.textbox_login_id = LoginPageLocators.texbox_login_id
+        self.textbox_password_id = LoginPageLocators.textbox_password_id
+        self.button_login_id = LoginPageLocators.button_login_id
+        self.alert_error_xpath = LoginPageLocators.alert_error_xpath
+        self.logo_css = LoginPageLocators.logo_css
 
     def enter_login(self, login):
         self.driver.find_element(By.ID, self.textbox_login_id).clear()

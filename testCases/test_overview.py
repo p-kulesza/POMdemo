@@ -21,7 +21,7 @@ class OverviewPageTest(unittest.TestCase):
         cls.driver.implicitly_wait(5)
         print("SetUp complete.")
 
-        def login_and_checkout_and_info_emtpy_step(self):
+    def login_and_checkout_and_info_emtpy_step(self):
         driver = self.driver
         driver.get("https://www.saucedemo.com/")
         loginpage = LoginPage(driver)
@@ -31,7 +31,6 @@ class OverviewPageTest(unittest.TestCase):
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
-        homepage.click_addtocart()
         homepage.click_checkout()
         checkout.click_checkout()
         information.enter_firstname("Piotr")
@@ -63,9 +62,22 @@ class OverviewPageTest(unittest.TestCase):
         self.login_checkout_and_info_w_items_step()
         overview = OverviewPage(driver)
         overview.print_summary_info() #maybe assertion of certain elements?
-        print(overview.get_item_name_text()) #add to other test
+       # print(overview.get_item_name_text()) #add to other test
+
+    def test_summary_info_empty_chart_text(self):
+        driver = self.driver
+        self.login_and_checkout_and_info_emtpy_step()
+        overview = OverviewPage(driver)
+        overview.print_summary_info()
 
     #test every element of summary info?
+
+    def test_delete_item(self):
+        driver = self.driver
+        self.login_checkout_and_info_w_items_step()
+        overview = OverviewPage(driver)
+        print(overview.get_item_name_text())
+        print(overview.get_item_name_text())
 
     #delete one item test, all items
 

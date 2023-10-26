@@ -46,9 +46,7 @@ class HomePageTest(unittest.TestCase):
         homepage.click_menu()
         homepage.click_reset()
         homepage.click_checkout()
-
-        # HOW TO ASSERT LACK OF ELEMENT
-        # add checkout assertion - lack of .cart_quantity?
+        self.assertEqual(checkout.list_number_of_items(), 0)
 
     def test_allitems(self):
         driver = self.driver
