@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from Locators.homePageLocators import HomePageLocators
 
 from selenium.webdriver.support.select import Select
 
@@ -7,17 +8,17 @@ from selenium.webdriver.support.select import Select
 class HomePage():
     def __init__(self,driver):
         self.driver = driver
-        self.button_menu_xpath = "//div[@class='bm-burger-button']"
-        self.button_reset_id = "reset_sidebar_link"
-        self.button_allitems_id = "inventory_sidebar_link"
-        self.button_about_id = "about_sidebar_link"
-        self.button_logout_id = "logout_sidebar_link"
-        self.app_logo_css = ".app_logo"
-        self.button_checkout_css = ".shopping_cart_link"
-        self.button_sort_css = ".product_sort_container"
-        self.button_addtocart_xpath = ".//button[@class='btn btn_primary btn_small btn_inventory ']"
-        self.inventory_item_css = ".inventory_item_name"
-        self.price_css = ".inventory_item_price"
+        self.button_menu_xpath = HomePageLocators.button_menu_xpath
+        self.button_reset_id = HomePageLocators.button_reset_id
+        self.button_allitems_id = HomePageLocators.button_allitems_id
+        self.button_about_id = HomePageLocators.button_about_id
+        self.button_logout_id = HomePageLocators.button_logout_id
+        self.app_logo_css = HomePageLocators.app_logo_css
+        self.button_checkout_css = HomePageLocators.button_checkout_css
+        self.button_sort_css = HomePageLocators.button_sort_css
+        self.button_addtocart_xpath = HomePageLocators.button_addtocart_xpath
+        self.inventory_item_css = HomePageLocators.inventory_item_css
+        self.price_css = HomePageLocators.price_css
 
     def click_menu(self):
         self.driver.find_element(By.XPATH, self.button_menu_xpath).click()

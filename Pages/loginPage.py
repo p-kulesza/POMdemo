@@ -22,8 +22,9 @@ class LoginPage():
     def click_login(self):
         self.driver.find_element(By.ID, self.button_login_id).click()
 
-    def error_text_presence(self):
-        assert self.driver.find_element(By.XPATH, self.alert_error_xpath)
+    def error_text(self):
+        alert = self.driver.find_element(By.XPATH, self.alert_error_xpath)
+        return alert.text
 
     def logo_presence(self):
         assert self.driver.find_element(By.CSS_SELECTOR, self.logo_css)

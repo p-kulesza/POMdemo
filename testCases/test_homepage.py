@@ -28,7 +28,6 @@ class HomePageTest(unittest.TestCase):
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
-        print("Successfully logged in")
 
     def test_menu(self):
         driver = self.driver

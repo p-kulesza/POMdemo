@@ -1,17 +1,18 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
+from Locators.checkoutPageLocators import CheckoutPageLocators
 
 
 class CheckoutPage():
     def __init__(self, driver):
         self.driver = driver
-        self.button_checkout_css = "#checkout"
-        self.button_continue_shopping_css = "#continue-shopping"
-        self.button_menu_xpath = "//div[@class='bm-burger-button']"
-        self.button_remove_xpath = "//button[contains(text(),'Remove')]"
-        self.inventory_item_name_css = ".inventory_item_name"
-        self.yourcart_text_presence_xpath = "//span[contains(text(),'Your Cart')]"
-        self.item_description_css = ".inventory_item_desc"
+        self.button_checkout_css = CheckoutPageLocators.button_checkout_css
+        self.button_continue_shopping_css = CheckoutPageLocators.button_continue_shopping_css
+        self.button_menu_xpath = CheckoutPageLocators.button_menu_xpath
+        self.button_remove_xpath = CheckoutPageLocators.button_remove_xpath
+        self.inventory_item_name_css = CheckoutPageLocators.inventory_item_name_css
+        self.yourcart_text_presence_xpath = CheckoutPageLocators.yourcart_text_presence_xpath
+        self.item_description_css = CheckoutPageLocators.item_description_css
 
     def click_checkout(self):
         self.driver.find_element(By.CSS_SELECTOR, self.button_checkout_css).click()
@@ -27,7 +28,12 @@ class CheckoutPage():
         return len(list)
 
     def item_description(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.item_description_css)
+        desc_list = []
+        descriptions = self.driver.find_elements(By.CSS_SELECTOR, self.item_description_css)
+        for description in descriptions:
+            description_text = description.text
+            desc_list.append(description_text)
+        return len(desc_list)
 
     def delete_item(self):
         self.driver.find_element(By.XPATH, self.button_remove_xpath).click()

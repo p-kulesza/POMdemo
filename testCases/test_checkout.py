@@ -26,7 +26,13 @@ class CheckoutPageTest(unittest.TestCase):
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
-        print("Successfully logged in")
+
+    def reset_page(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        checkout.click_menu_button()
+        homepage.click_reset()
 
     def test_empty_checkout(self):
         driver = self.driver
@@ -36,6 +42,8 @@ class CheckoutPageTest(unittest.TestCase):
         homepage.click_checkout()
         checkout.click_checkout()
         self.assertEqual(checkout.list_number_of_items(), 0)
+        self.reset_page()
+
 
     def test_reset_checkout(self):
         driver = self.driver
@@ -48,15 +56,28 @@ class CheckoutPageTest(unittest.TestCase):
         homepage.click_reset()
         self.driver.refresh()
         self.assertEqual(checkout.list_number_of_items(), 0)
+        self.reset_page()
 
-    def test_item_description_presence_checkout(self):
+    def test_one_item_description_presence_checkout(self):
         driver = self.driver
         checkout = CheckoutPage(driver)
         homepage = HomePage(driver)
         self.login_step()
         homepage.click_addtocart()
         homepage.click_checkout()
-        checkout.item_description()
+        self.assertEqual(checkout.item_description(), 1)
+        self.reset_page()
+
+    def test_multiple_items_description_presence_checkout(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        self.login_step()
+        homepage.click_addtocart()
+        homepage.click_addtocart()
+        homepage.click_checkout()
+        self.assertEqual(checkout.item_description(), 2)
+        self.reset_page()
 
     def test_multiple_items_checkout(self):
         driver = self.driver
@@ -67,6 +88,7 @@ class CheckoutPageTest(unittest.TestCase):
         homepage.click_addtocart()
         homepage.click_checkout()
         self.assertEqual(checkout.list_number_of_items(), 2)
+        self.reset_page()
 
     def test_multiple_items_delete_one_checkout(self):
         driver = self.driver
@@ -79,6 +101,7 @@ class CheckoutPageTest(unittest.TestCase):
         self.assertEqual(checkout.list_number_of_items(), 2)
         checkout.delete_item()
         self.assertEqual(checkout.list_number_of_items(), 1)
+        self.reset_page()
 
     def test_mulitple_items_delete_all_checkout(self):
         driver = self.driver
@@ -93,6 +116,7 @@ class CheckoutPageTest(unittest.TestCase):
         self.assertEqual(checkout.list_number_of_items(), 1)
         checkout.delete_item()
         self.assertEqual(checkout.list_number_of_items(), 0)
+        self.reset_page()
 
     @classmethod
     def tearDownClass(cls):

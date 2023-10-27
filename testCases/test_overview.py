@@ -57,11 +57,20 @@ class OverviewPageTest(unittest.TestCase):
         information.enter_zip("11-111")
         information.click_continue()
 
+    def reset_page(self):
+        driver = self.driver
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        checkout.click_menu_button()
+        homepage.click_reset()
+
     def test_summary_info_text(self):
         driver = self.driver
         self.login_checkout_and_info_w_items_step()
         overview = OverviewPage(driver)
-        overview.print_summary_info() #maybe assertion of certain elements?
+        overview.print_summary_info()
+        self.reset_page()
+        #maybe assertion of certain elements?
        # print(overview.get_item_name_text()) #add to other test
 
     def test_summary_info_empty_chart_text(self):
@@ -69,6 +78,7 @@ class OverviewPageTest(unittest.TestCase):
         self.login_and_checkout_and_info_emtpy_step()
         overview = OverviewPage(driver)
         overview.print_summary_info()
+        self.reset_page()
 
     #test every element of summary info?
 
@@ -76,7 +86,6 @@ class OverviewPageTest(unittest.TestCase):
         driver = self.driver
         self.login_checkout_and_info_w_items_step()
         overview = OverviewPage(driver)
-        print(overview.get_item_name_text())
         print(overview.get_item_name_text())
 
     #delete one item test, all items

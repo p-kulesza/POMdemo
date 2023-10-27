@@ -25,6 +25,15 @@ class LoginTest(unittest.TestCase):
         loginpage.click_login()
         homepage.app_logo_presence()
 
+    def test_locked_user(self):
+        driver = self.driver
+        driver.get("https://www.saucedemo.com/")
+        loginpage = LoginPage(driver)
+        loginpage.enter_login("locked_out_user")
+        loginpage.enter_password("secret_sauce")
+        loginpage.click_login()
+        self.assertEqual(loginpage.error_text(), "Epic sadface: Sorry, this user has been locked out.")
+
     def test_login_invalid_username(self):
         driver = self.driver
         driver.get("https://www.saucedemo.com/")
@@ -32,7 +41,7 @@ class LoginTest(unittest.TestCase):
         loginpage.enter_login("standar_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
-        loginpage.error_text_presence()
+        self.assertEqual(loginpage.error_text(), "Epic sadface: Username and password do not match any user in this service")
 
     def test_login_invalid_password(self):
         driver = self.driver
@@ -41,14 +50,14 @@ class LoginTest(unittest.TestCase):
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secre_sauce")
         loginpage.click_login()
-        loginpage.error_text_presence()
+        self.assertEqual(loginpage.error_text(), "Epic sadface: Username and password do not match any user in this service")
 
     def test_login_invalid_empty_creds(self):
         driver = self.driver
         driver.get("https://www.saucedemo.com/")
         loginpage = LoginPage(driver)
         loginpage.click_login()
-        loginpage.error_text_presence()
+        self.assertEqual(loginpage.error_text(), "Epic sadface: Username is required")
 
     def test_login_invalid_empty_username(self):
         driver = self.driver
@@ -56,7 +65,7 @@ class LoginTest(unittest.TestCase):
         loginpage = LoginPage(driver)
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
-        loginpage.error_text_presence()
+        self.assertEqual(loginpage.error_text(), "Epic sadface: Username is required")
 
     def test_login_invalid_empty_password(self):
         driver = self.driver
@@ -64,7 +73,7 @@ class LoginTest(unittest.TestCase):
         loginpage = LoginPage(driver)
         loginpage.enter_login("standard_user")
         loginpage.click_login()
-        loginpage.error_text_presence()
+        self.assertEqual(loginpage.error_text(), "Epic sadface: Password is required")
 
     @classmethod
     def tearDownClass(cls):

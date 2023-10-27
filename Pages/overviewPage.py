@@ -1,14 +1,14 @@
 from selenium.webdriver.common.by import By
-
+from Locators.overviewPageLocators import OverviewPageLocators
 
 class OverviewPage():
     def __init__(self, driver):
         self.driver = driver
-        self.button_cancel_id = "cancel"
-        self.button_finish_id = "finish"
-        self.button_remove_xpath = "//button[contains(text(),'Remove')]"
-        self.overview_container_css = ".checkout_summary_container"
-        self.item_name_css = ".inventory_item_name"
+        self.button_cancel_id = OverviewPageLocators.button_cancel_id
+        self.button_finish_id = OverviewPageLocators.button_finish_id
+        self.button_remove_xpath = OverviewPageLocators.button_remove_xpath
+        self.overview_container_css = OverviewPageLocators.overview_container_css
+        self.item_name_css = OverviewPageLocators.item_name_css
         #whole payment info into text!!!
         #product name == product in cart
 
