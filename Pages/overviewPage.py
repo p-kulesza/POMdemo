@@ -9,8 +9,6 @@ class OverviewPage():
         self.button_remove_xpath = OverviewPageLocators.button_remove_xpath
         self.overview_container_css = OverviewPageLocators.overview_container_css
         self.item_name_css = OverviewPageLocators.item_name_css
-        #whole payment info into text!!!
-        #product name == product in cart
 
     def click_cancel(self):
         self.driver.find_element(By.ID, self.button_cancel_id).click()
@@ -18,9 +16,9 @@ class OverviewPage():
     def click_finish(self):
         self.driver.find_element(By.ID, self.button_finish_id).click()
 
-    def print_summary_info(self):
+    def summary_info(self):
         summary = self.driver.find_element(By.CSS_SELECTOR, self.overview_container_css)
-        print(summary.text) #return summary.text?
+        return summary.text #return summary.text?
 
 
     def get_item_name_text(self):
@@ -30,3 +28,5 @@ class OverviewPage():
             item_text = item_name.text
             itemList.append(item_text)
         return itemList
+
+

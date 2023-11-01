@@ -26,8 +26,10 @@ class InformationPage():
     def click_continue(self):
         self.driver.find_element(By.ID, self.button_continue_id).click()
 
-    def error_message_presence(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.message_error_css)
+    def error_message_text(self):
+        error_msg = self.driver.find_element(By.CSS_SELECTOR, self.message_error_css)
+        error_msg_text = error_msg.text
+        return error_msg_text
 
 
 

@@ -23,7 +23,7 @@ class LoginTest(unittest.TestCase):
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
-        homepage.app_logo_presence()
+        assert "Swag Labs" in homepage.app_logo_presence()
 
     def test_locked_user(self):
         driver = self.driver

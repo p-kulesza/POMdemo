@@ -45,7 +45,7 @@ class CompletePageTest(unittest.TestCase):
         driver = self.driver
         self.allsteps()
         completepage = CompletePage(driver)
-        completepage.complete_header_presence()
+        assert "Thank you for your order!" in (completepage.complete_header_text())
 
     def test_back_home(self):
         driver = self.driver
@@ -53,7 +53,7 @@ class CompletePageTest(unittest.TestCase):
         completepage = CompletePage(driver)
         homepage = HomePage(driver)
         completepage.click_back_home()
-        homepage.app_logo_presence()
+        assert "Swag Labs" in homepage.app_logo_presence()
 
     @classmethod
     def tearDownClass(cls):

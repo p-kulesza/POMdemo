@@ -7,6 +7,7 @@ from Pages.checkoutPage import CheckoutPage
 from Pages.homePage import HomePage
 from Pages.informationPage import InformationPage
 from Pages.loginPage import LoginPage
+from Pages.overviewPage import OverviewPage
 
 
 class InformationPageTest(unittest.TestCase):
@@ -32,12 +33,20 @@ class InformationPageTest(unittest.TestCase):
         homepage.click_checkout()
         checkout.click_checkout()
 
+    def reset_page(self):
+        driver = self.driver #necessary step, source page doesn't delete items after closing.
+        checkout = CheckoutPage(driver)
+        homepage = HomePage(driver)
+        checkout.click_menu_button()
+        homepage.click_reset()
+
     def test_empty_information(self):
         self.login_and_checkout_step()
         driver = self.driver
         information = InformationPage(driver)
         information.click_continue()
-        information.error_message_presence()
+        assert "Error: First Name is required" in information.error_message_text()
+        self.reset_page()
 
     def test_no_firstname_information(self):
         self.login_and_checkout_step()
@@ -46,7 +55,8 @@ class InformationPageTest(unittest.TestCase):
         information.enter_lastname("Kowalski")
         information.enter_zip("11-111")
         information.click_continue()
-        information.error_message_presence()
+        assert "Error: First Name is required" in information.error_message_text()
+        self.reset_page()
 
     def test_no_lastname_information(self):
         self.login_and_checkout_step()
@@ -55,7 +65,8 @@ class InformationPageTest(unittest.TestCase):
         information.enter_firstname("Piotr")
         information.enter_zip("11-111")
         information.click_continue()
-        information.error_message_presence()
+        assert "Error: Last Name is required" in information.error_message_text()
+        self.reset_page()
 
     def test_no_zipcode_information(self):
         self.login_and_checkout_step()
@@ -64,17 +75,20 @@ class InformationPageTest(unittest.TestCase):
         information.enter_firstname("Piotr")
         information.enter_lastname("Kowalski")
         information.click_continue()
-        information.error_message_presence()
+        assert "Error: Postal Code is required" in information.error_message_text()
+        self.reset_page()
 
     def test_valid_information_continue(self):
         self.login_and_checkout_step()
         driver = self.driver
         information = InformationPage(driver)
+        overview = OverviewPage(driver)
         information.enter_firstname("Piotr")
         information.enter_lastname("Kowalski")
         information.enter_zip("66-666")
         information.click_continue()
-
+        assert "Finish" in overview.summary_info() #assertion - change of url
+        self.reset_page()
 
     def test_valid_information_cancel(self):
         self.login_and_checkout_step()
@@ -85,7 +99,8 @@ class InformationPageTest(unittest.TestCase):
         information.enter_lastname("Kowalski")
         information.enter_zip("11-111")
         information.click_cancel()
-        checkout.item_description() #successfully came back to checkout page
+        self.assertEqual(len(checkout.item_description()), 1) #successfully came back to checkout page
+        self.reset_page()
 
     @classmethod
     def tearDownClass(cls):

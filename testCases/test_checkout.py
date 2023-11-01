@@ -65,7 +65,7 @@ class CheckoutPageTest(unittest.TestCase):
         self.login_step()
         homepage.click_addtocart()
         homepage.click_checkout()
-        self.assertEqual(checkout.item_description(), 1)
+        self.assertEqual(len(checkout.item_description()), 1)
         self.reset_page()
 
     def test_multiple_items_description_presence_checkout(self):
@@ -76,7 +76,7 @@ class CheckoutPageTest(unittest.TestCase):
         homepage.click_addtocart()
         homepage.click_addtocart()
         homepage.click_checkout()
-        self.assertEqual(checkout.item_description(), 2)
+        self.assertEqual(len(checkout.item_description()), 2)
         self.reset_page()
 
     def test_multiple_items_checkout(self):

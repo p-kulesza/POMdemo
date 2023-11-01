@@ -58,37 +58,47 @@ class OverviewPageTest(unittest.TestCase):
         information.click_continue()
 
     def reset_page(self):
-        driver = self.driver
+        driver = self.driver #necessary step, source page doesn't delete items after closing.
         checkout = CheckoutPage(driver)
         homepage = HomePage(driver)
         checkout.click_menu_button()
         homepage.click_reset()
 
+    def test_presence_of_payment_info_in_summary(self):
+        driver = self.driver
+        overview = OverviewPage(driver)
+        self.login_checkout_and_info_w_items_step()
+        assert "Payment Information" in overview.summary_info()
+        self.reset_page()
+
+    def test_presence_of_shipping_info_in_summary(self):
+        driver = self.driver
+        overview = OverviewPage(driver)
+        self.login_checkout_and_info_w_items_step()
+        assert "Shipping Information" in overview.summary_info()
+        self.reset_page()
+
+    def test_presence_of_price_total_info_in_summary(self):
+        driver = self.driver
+        overview = OverviewPage(driver)
+        self.login_checkout_and_info_w_items_step()
+        assert "Price Total" in overview.summary_info()
+        self.reset_page()
+
     def test_summary_info_text(self):
         driver = self.driver
         self.login_checkout_and_info_w_items_step()
         overview = OverviewPage(driver)
-        overview.print_summary_info()
+        print("Summary info data: " + overview.summary_info())
         self.reset_page()
-        #maybe assertion of certain elements?
-       # print(overview.get_item_name_text()) #add to other test
 
     def test_summary_info_empty_chart_text(self):
         driver = self.driver
         self.login_and_checkout_and_info_emtpy_step()
         overview = OverviewPage(driver)
-        overview.print_summary_info()
+        print(overview.summary_info())  #assertion!
+        assert "Total: $0.00" in overview.summary_info()
         self.reset_page()
-
-    #test every element of summary info?
-
-    def test_delete_item(self):
-        driver = self.driver
-        self.login_checkout_and_info_w_items_step()
-        overview = OverviewPage(driver)
-        print(overview.get_item_name_text())
-
-    #delete one item test, all items
 
     @classmethod
     def tearDownClass(cls):

@@ -26,5 +26,7 @@ class LoginPage():
         alert = self.driver.find_element(By.XPATH, self.alert_error_xpath)
         return alert.text
 
-    def logo_presence(self):
-        assert self.driver.find_element(By.CSS_SELECTOR, self.logo_css)
+    def logo_text(self):
+        logo = self.driver.find_element(By.CSS_SELECTOR, self.logo_css)
+        logo_text = logo.text
+        return logo_text
