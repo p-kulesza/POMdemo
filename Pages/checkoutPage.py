@@ -33,7 +33,15 @@ class CheckoutPage():
         for description in descriptions:
             description_text = description.text
             desc_list.append(description_text)
-        return len(desc_list)
+        return desc_list
+
+    def item_name_text(self):
+        item_names = []
+        items = self.driver.find_elements(By.CSS_SELECTOR, ".inventory_item_name")
+        for item in items:
+            item_text = item.text
+            item_names.append(item_text)
+        return item_names
 
     def delete_item(self):
         self.driver.find_element(By.XPATH, self.button_remove_xpath).click()

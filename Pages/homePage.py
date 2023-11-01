@@ -39,7 +39,9 @@ class HomePage():
     def click_logout(self):
         self.driver.find_element(By.ID, self.button_logout_id).click()
     def app_logo_presence(self):
-        self.driver.find_element(By.CSS_SELECTOR, self.app_logo_css)
+        logo = self.driver.find_element(By.CSS_SELECTOR, self.app_logo_css)
+        logo_text = logo.text
+        return logo_text
     def click_checkout(self):
         self.driver.find_element(By.CSS_SELECTOR, self.button_checkout_css).click()
     def click_addtocart(self):

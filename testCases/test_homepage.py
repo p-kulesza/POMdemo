@@ -11,6 +11,7 @@ from Pages.checkoutPage import CheckoutPage
 from Pages.homePage import HomePage
 from Pages.loginPage import LoginPage
 
+
 class HomePageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -24,7 +25,7 @@ class HomePageTest(unittest.TestCase):
     def login_step(self):
         driver = self.driver
         driver.get("https://www.saucedemo.com/")
-        loginpage = LoginPage (driver)
+        loginpage = LoginPage(driver)
         loginpage.enter_login("standard_user")
         loginpage.enter_password("secret_sauce")
         loginpage.click_login()
@@ -53,7 +54,7 @@ class HomePageTest(unittest.TestCase):
         self.login_step()
         homepage.click_menu()
         homepage.click_allitems()  # This does nothing on page :(, no assertion
-        homepage.app_logo_presence()
+        assert "Swag Labs" in homepage.app_logo_presence()
 
     def test_about(self):
         driver = self.driver
@@ -61,7 +62,7 @@ class HomePageTest(unittest.TestCase):
         self.login_step()
         homepage.click_menu()
         homepage.click_about()
-        actualtitle = self.driver.title #about page name assertion
+        actualtitle = self.driver.title
         expectedtitle = "Sauce Labs: Cross Browser Testing, Selenium Testing & Mobile Testing"
         self.assertEqual(actualtitle, expectedtitle)
 
@@ -72,7 +73,7 @@ class HomePageTest(unittest.TestCase):
         self.login_step()
         homepage.click_menu()
         homepage.click_logout()
-        loginpage.logo_presence()
+        assert "Swag Labs" in loginpage.logo_text()
 
     def test_number_of_items(self):
         driver = self.driver
@@ -80,7 +81,6 @@ class HomePageTest(unittest.TestCase):
         self.login_step()
         print("number of items on the page:")
         homepage.number_of_items()
-
 
     def test_sort_a_to_z(self):
         driver = self.driver
@@ -96,7 +96,6 @@ class HomePageTest(unittest.TestCase):
         homepage = HomePage(driver)
         self.login_step()
         homepage.select_product_sort_visible_text("Name (Z to A)")
-        homepage.select_product_sort_visible_text("Name (Z to A)")
         actualList = homepage.list_products()
         expectedList = sorted(homepage.list_products(), reverse=True)
         self.assertEqual(actualList, expectedList)
@@ -106,11 +105,9 @@ class HomePageTest(unittest.TestCase):
         homepage = HomePage(driver)
         self.login_step()
         homepage.select_product_sort_visible_text("Price (low to high)")
-        actualList = homepage.list_price()  #['$7.99', '$9.99', '$15.99', '$15.99', '$29.99', '$49.99']
+        actualList = homepage.list_price()
         expectedList = ['$7.99', '$9.99', '$15.99', '$15.99', '$29.99', '$49.99']
-        self.assertEqual(actualList, expectedList) #extract only numbers
-
-
+        self.assertEqual(actualList, expectedList)  # extract only numbers!!!
 
     def test_sort_high_to_low(self):
         driver = self.driver
